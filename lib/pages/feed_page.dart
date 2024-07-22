@@ -23,7 +23,7 @@ class _FeedPageState extends State<FeedPage> {
           Row(
             children: [
               Text(
-                'Feed',
+                'Thinkcard',
                 style: TextStyle(
                   fontSize: 24
                 ),
@@ -33,7 +33,9 @@ class _FeedPageState extends State<FeedPage> {
           SizedBox(
             height: 16
           ),
-          DraggableCard()
+          Expanded(
+            child: DraggableCard()
+          )
         ],
       ),
     );

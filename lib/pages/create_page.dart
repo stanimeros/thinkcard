@@ -7,14 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class CreatePage extends StatefulWidget {
-  CreatePage({super.key});
   final user = FirebaseAuth.instance.currentUser!;
+
+  CreatePage({super.key});
 
   @override
   State<CreatePage> createState() => _CreatePageState();
 }
 
 class _CreatePageState extends State<CreatePage> {
+
+  bool isUploading = false;
 
   final ImagePicker picker = ImagePicker();
   List<XFile> imageFiles = [];
@@ -75,6 +78,37 @@ class _CreatePageState extends State<CreatePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              const Text(
+                'Create',
+                style: TextStyle(
+                  fontSize: 24
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () async{
+                  if (!isUploading){
+                    setState(() {
+                      isUploading = true;
+                    });
+                    await upload();
+                    setState(() {
+                      isUploading = false;
+                    });
+                  }
+                }, 
+                icon: const Icon(
+                  size: 22,
+                  LucideIcons.save
+                )
+              )
+            ],
+          ),
+        ),
         GestureDetector(
           onTap: pickImages,
           child: Container(
