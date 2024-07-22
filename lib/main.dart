@@ -7,6 +7,7 @@ import 'package:thinkcard/common/custom_theme.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/firebase_options.dart';
 import 'package:thinkcard/pages/chats_page.dart';
+import 'package:thinkcard/pages/create_page.dart';
 import 'package:thinkcard/pages/feed_page.dart';
 import 'package:thinkcard/pages/login_page.dart';
 import 'package:thinkcard/pages/profile_page.dart';
@@ -60,6 +61,7 @@ class _MainAppState extends State<MainApp> {
                           controller: pageController,
                           children: [
                             const FeedPage(),
+                            CreatePage(),
                             ChatsPage(),
                             ProfilePage()
                           ],
