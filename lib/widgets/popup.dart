@@ -25,7 +25,7 @@ class PopUp extends AlertDialog {
       titleTextStyle: GoogleFonts.manrope(
         fontSize: 17,
       ),
-      title:  Text(
+      title: Text(
         textTitle,
         textAlign: TextAlign.center,
       ),

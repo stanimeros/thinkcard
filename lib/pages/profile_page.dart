@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/globals.dart' as globals;
+import 'package:thinkcard/common/slide_page_route.dart';
+import 'package:thinkcard/pages/profile_edit_page.dart';
+import 'package:thinkcard/widgets/profile_picture.dart';
 import 'package:thinkcard/widgets/user_posts.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -35,6 +39,43 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                const Text(
+                  'Profile',
+                  style: TextStyle(
+                    fontSize: 24
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      SlidePageRoute(page:  ProfileEditPage(user: user))
+                    );
+                  }, 
+                  icon: const Icon(
+                    size: 22,
+                    LucideIcons.pencil
+                  )
+                )
+              ],
+            ),
+            Row(
+              children: [
+                ProfilePicture(
+                  user: user, 
+                  size: 50, 
+                  color: globals.textColor, 
+                  backgroundColor: globals.cachedImageColor
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  user.username
+                )
+              ],
+            ),
             UserPosts(user: user),
           ],
         )

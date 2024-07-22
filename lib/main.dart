@@ -11,6 +11,7 @@ import 'package:thinkcard/pages/create_page.dart';
 import 'package:thinkcard/pages/feed_page.dart';
 import 'package:thinkcard/pages/login_page.dart';
 import 'package:thinkcard/pages/profile_page.dart';
+import 'package:thinkcard/pages/search_page.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
 
 void main() async {
@@ -61,6 +62,7 @@ class _MainAppState extends State<MainApp> {
                           controller: pageController,
                           children: [
                             const FeedPage(),
+                            SearchPage(),
                             CreatePage(),
                             ChatsPage(),
                             ProfilePage()

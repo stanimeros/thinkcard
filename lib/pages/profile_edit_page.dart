@@ -6,6 +6,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/globals.dart' as globals;
+import 'package:thinkcard/widgets/custom_loader.dart';
 import 'package:thinkcard/widgets/popup.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 
@@ -24,6 +25,8 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
 
+  bool isSaving = false;
+
   XFile? newProfilePicture;
   final ImagePicker picker = ImagePicker();
 
@@ -32,8 +35,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController joinedController = TextEditingController();
-
-
 
   Future<void> pickImage() async {
     final XFile? selectedImage = await picker.pickImage(
@@ -47,7 +48,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     });
   }
 
-  void saveChanges() async{
+  Future<void> saveChanges() async{
     String newUsername = usernameController.text.trim().toLowerCase();
 
     if (!invalid){
@@ -87,12 +88,53 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    }, 
+                    icon: const Icon(
+                      size: 22,
+                      LucideIcons.arrowLeft
+                    )
+                  ),
+                  const Spacer(),
+                  const Text(
+                    'Edit Profile',
+                    style: TextStyle(
+                      fontSize: 24
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () async{
+                      if (!isSaving){
+                        setState(() {
+                          isSaving = true;
+                        });
+
+                        await saveChanges();
+
+                        setState(() {
+                          isSaving = false;
+                        });
+                      }
+                    }, 
+                    icon: isSaving ?
+                      const CustomLoader()
+                      : const Icon(
+                      size: 22,
+                      LucideIcons.saveAll
+                    )
+                  ),
+                ],
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,7 +252,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       funBtn1: () {
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        // FirestoreService().deleteAccount();
+                        FirestoreService().deleteAccount();
                       },
                       funBtn2: () {
                         Navigator.pop(context);

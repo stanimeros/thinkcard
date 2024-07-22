@@ -233,8 +233,6 @@ class FirestoreService {
   }
 
   void deleteAccount() async {
-
-    // Delete user messages
     QuerySnapshot chatsSnapshot = await firestore
       .collection('chats')
       .where('users', arrayContains: authUser.uid)
