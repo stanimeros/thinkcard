@@ -56,6 +56,7 @@ class _UserPageState extends State<UserPage>{
                           LucideIcons.arrowLeft
                         )
                       ),
+                      const SizedBox(width:8),
                       ProfilePicture(
                         user: user, 
                         size: 50, 
@@ -64,21 +65,24 @@ class _UserPageState extends State<UserPage>{
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        user.username
+                        '@${user.username}',
+                        style: const TextStyle(
+                          fontSize: 18
+                        ),
                       ),
                       const Spacer(),
                       IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        SlidePageRoute(page: Chat(friend: widget.user))
-                      );
-                    }, 
-                    icon: const Icon(
-                      size: 22,
-                      LucideIcons.messageCircle
-                    )
-                  ),
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            SlidePageRoute(page: Chat(user: widget.user))
+                          );
+                        }, 
+                        icon: const Icon(
+                          size: 22,
+                          LucideIcons.messageCircle
+                        )
+                      ),
                     ],
                   ),
                   UserPosts(user: user)

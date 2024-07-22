@@ -7,6 +7,7 @@ import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
 import 'package:thinkcard/pages/user_page.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
+import 'package:thinkcard/common/globals.dart' as globals;
 
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});
@@ -87,35 +88,37 @@ class _SearchPageState extends State<SearchPage> {
               ),
             )
           ),
+          const SizedBox(height: 12),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: results.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        SlidePageRoute(page: UserPage(user: results[index]))
-                      );
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Row(
-                        children: [
-                          ProfilePicture(user: results[index], size: 48, color: Colors.white, backgroundColor:const Color.fromARGB(255, 180, 180, 180)),
-                          const SizedBox(width: 8),
-                          Text(
-                            '@${results[index].username}',
-                            style: const TextStyle(
-                              fontSize: 18
-                            ),
-                          ),
-                        ],
+                return ListTile(
+                  tileColor: globals.skeletonTileColor,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),              
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SlidePageRoute(page: UserPage(user: results[index]))
+                    );
+                  },
+                  leading: ProfilePicture(
+                    user: results[index], 
+                    size: 42, 
+                    color: globals.textColor,
+                    backgroundColor: globals.backgroundColor
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        '@${results[index].username}',
+                        style: const TextStyle(
+                          fontSize: 18
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               },

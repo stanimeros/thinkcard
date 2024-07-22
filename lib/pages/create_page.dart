@@ -18,12 +18,13 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
 
   bool isUploading = false;
-
   final ImagePicker picker = ImagePicker();
   List<XFile> imageFiles = [];
 
-  final focusNode = FocusNode();
+  final titleFocusNode = FocusNode();
+  final descFocusNode = FocusNode();
   final TextEditingController titleController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
 
   Future<void> pickImages() async {
     if (imageFiles.isEmpty){
@@ -43,7 +44,8 @@ class _CreatePageState extends State<CreatePage> {
   }
 
   Future<bool> upload() async {
-    focusNode.unfocus();
+    titleFocusNode.unfocus();
+    descFocusNode.unfocus();
     String title = titleController.text;
     if (imageFiles.isNotEmpty && title.isNotEmpty) {
       FirebaseStorage storage = FirebaseStorage.instance;
@@ -164,9 +166,17 @@ class _CreatePageState extends State<CreatePage> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: TextField(
-            focusNode: focusNode,
+            focusNode: titleFocusNode,
             controller: titleController,
             decoration: const InputDecoration(labelText: 'Title'),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: TextField(
+            focusNode: descFocusNode,
+            controller: descController,
+            decoration: const InputDecoration(labelText: 'Description'),
           ),
         ),
       ],

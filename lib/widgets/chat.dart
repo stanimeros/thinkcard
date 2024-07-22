@@ -8,11 +8,11 @@ import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 
 class Chat extends StatefulWidget {
-  final AppUser friend;
+  final AppUser user;
 
   const Chat({
     super.key,
-    required this.friend
+    required this.user
   });
 
   @override
@@ -49,34 +49,33 @@ class _ChatState extends State<Chat>{
               Row(
                 children: [
                   IconButton(
-                    onPressed: () {
+                    onPressed: (){
                       Navigator.pop(context);
                     }, 
                     icon: const Icon(
+                      size: 22,
                       LucideIcons.arrowLeft
                     )
                   ),
-                  const SizedBox(
-                    width: 12,
-                  ),
+                  const SizedBox(width:8),
                   ProfilePicture(
-                    user: widget.friend, 
-                    size: 40, 
+                    user: widget.user, 
+                    size: 50, 
                     color: globals.textColor, 
                     backgroundColor: globals.cachedImageColor
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Text(
-                    widget.friend.username,
+                    '@${widget.user.username}',
                     style: const TextStyle(
-                      fontSize: 24
+                      fontSize: 18
                     ),
                   ),
                 ],
               ),
               Expanded(
                 child: StreamBuilder(
-                  stream: FirestoreService().getChatSnapshot(widget.friend),
+                  stream: FirestoreService().getChatSnapshot(widget.user),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var chatData = snapshot.data!.data() as Map<String, dynamic>?;
@@ -107,7 +106,7 @@ class _ChatState extends State<Chat>{
                                   ),
                                 ]:[
                                   ProfilePicture(
-                                    user: widget.friend,
+                                    user: widget.user,
                                     size: 36,
                                     color: globals.textColor, 
                                     backgroundColor: globals.cachedImageColor
@@ -135,7 +134,7 @@ class _ChatState extends State<Chat>{
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                     onPressed: () async {
-                      FirestoreService().sendMessage(widget.friend, messageController.text);
+                      FirestoreService().sendMessage(widget.user, messageController.text);
                       messageController.clear();
                     }, 
                     icon: const Icon(

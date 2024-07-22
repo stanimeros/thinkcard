@@ -91,7 +91,7 @@ class _ChatsPageState extends State<ChatsPage>{
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        SlidePageRoute(page: Chat(friend: friend))
+                                        SlidePageRoute(page: Chat(user: friend))
                                       );
                                     },
                                   ),

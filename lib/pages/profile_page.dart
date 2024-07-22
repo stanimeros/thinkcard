@@ -41,29 +41,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
           children: [
             Row(
               children: [
-                const Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: 24
-                  ),
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      SlidePageRoute(page:  ProfileEditPage(user: user))
-                    );
-                  }, 
-                  icon: const Icon(
-                    size: 22,
-                    LucideIcons.pencil
-                  )
-                )
-              ],
-            ),
-            Row(
-              children: [
+                const SizedBox(width:8),
                 ProfilePicture(
                   user: user, 
                   size: 50, 
@@ -72,7 +50,23 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  user.username
+                  '@${user.username}',
+                  style: const TextStyle(
+                    fontSize: 18
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      SlidePageRoute(page: ProfileEditPage(user: user))
+                    );
+                  }, 
+                  icon: const Icon(
+                    size: 22,
+                    LucideIcons.pencil
+                  )
                 )
               ],
             ),
