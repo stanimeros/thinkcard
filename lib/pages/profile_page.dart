@@ -23,12 +23,6 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
   @override
   bool get wantKeepAlive => true;
 
-  void refreshState(){
-    setState(() {
-      user = globals.user!;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -61,7 +55,11 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                     Navigator.push(
                       context,
                       SlidePageRoute(page: ProfileEditPage(user: user))
-                    );
+                    ).then((value) => setState(() {
+                      setState(() {
+                        user = globals.user!;
+                      });
+                    }));
                   }, 
                   icon: const Icon(
                     size: 22,

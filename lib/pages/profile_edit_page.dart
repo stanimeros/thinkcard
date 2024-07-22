@@ -53,7 +53,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
     if (!invalid){
       if (widget.user.username != newUsername){
-        await FirestoreService().setUsername(widget.authUser.uid);
+        await FirestoreService().setUsername(newUsername);
         globals.user?.username = newUsername;
       }
 

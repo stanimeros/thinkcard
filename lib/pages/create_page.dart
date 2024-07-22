@@ -105,7 +105,7 @@ class _CreatePageState extends State<CreatePage> {
                 }, 
                 icon: const Icon(
                   size: 22,
-                  LucideIcons.save
+                  LucideIcons.uploadCloud
                 )
               )
             ],
