@@ -7,13 +7,9 @@ AppUser? user;
 Color backgroundColor = const Color.fromARGB(255, 240, 240, 240);
 Color textColor = const Color.fromARGB(255, 25, 25, 25);
 
-Color rejectColor = const Color.fromARGB(255, 200, 15, 0);
 Color cachedImageColor = const Color.fromARGB(15, 0, 0, 0);
 Color skeletonTileColor = const Color.fromARGB(5, 0, 0, 0);
 Color skeletonShadowColor = const Color.fromARGB(10, 0, 0, 0);
-
-
-
 
 
 
