@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:thinkcard/widgets/custom_loader.dart';
 
 class CreatePage extends StatefulWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -68,6 +69,7 @@ class _CreatePageState extends State<CreatePage> {
       setState(() {
         imageFiles = [];
         titleController.text = '';
+        descController.text = '';
       });
 
       return true;
@@ -94,16 +96,23 @@ class _CreatePageState extends State<CreatePage> {
               IconButton(
                 onPressed: () async{
                   if (!isUploading){
-                    setState(() {
-                      isUploading = true;
-                    });
-                    await upload();
-                    setState(() {
-                      isUploading = false;
-                    });
+                    try{
+                      setState(() {
+                        isUploading = true;
+                      });
+                      await upload();
+                    }catch(e){
+                      debugPrint('Error $e');
+                    }finally{
+                      setState(() {
+                        isUploading = false;
+                      });
+                    }
                   }
                 }, 
-                icon: const Icon(
+                icon: isUploading ?
+                const CustomLoader()
+                : const Icon(
                   size: 22,
                   LucideIcons.uploadCloud
                 )
