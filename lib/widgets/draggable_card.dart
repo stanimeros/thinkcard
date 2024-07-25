@@ -47,27 +47,27 @@ class _DraggableCardState extends State<DraggableCard> {
             //X AXIS
             if (offset.dx > 0){
               setState(() {
-                offset = Offset(sWidth*1.5, 0);
+                offset = Offset(sWidth*1, 0);
               });
-              widget.dragEvent(widget.post,'Right');
+              widget.dragEvent(widget.key, 'Right');
             }else{
               setState(() {
-                offset = Offset(-sWidth*1.5, 0);
+                offset = Offset(-sWidth*1, 0);
               });
-              widget.dragEvent(widget.post,'Left');
+              widget.dragEvent(widget.key, 'Left');
             }
           }else{
             //Y AXIS
             if (offset.dy > 0){
               setState(() {
-                offset = Offset(0, -sHeight*1.5);
+                offset = Offset(0, sHeight);
               });
-              widget.dragEvent(widget.post, 'Up');
+              widget.dragEvent(widget.key, 'Up');
             }else{
               setState(() {
-                offset = Offset(0, sHeight*1.5);
+                offset = Offset(0, -sHeight);
               });
-              widget.dragEvent(widget.post, 'Down');
+              widget.dragEvent(widget.key, 'Down');
             }
           }
         }else{

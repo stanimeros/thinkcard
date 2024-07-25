@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/post.dart';
 import 'package:thinkcard/widgets/draggable_card.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
+import 'package:thinkcard/widgets/skeleton_card.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -14,7 +14,7 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
 
   List<Post> posts = [];
-  List<String> reactedIDs = [];
+  List<DraggableCard> cards = [];
 
   @override
   void initState() {
@@ -41,10 +41,13 @@ class _FeedPageState extends State<FeedPage> {
           const SizedBox(height: 16),
           Expanded(
             child: Stack(
-              children: posts.asMap().entries.map((entry) {
-                return DraggableCard(post: entry.value, dragEvent: dragEvent,);
-              }).toList(),
-            ),
+              children: [
+                const SkeletonCard(),
+                Stack(
+                  children: cards
+                ),
+              ],
+            )
           )
         ],
       ),
@@ -52,24 +55,34 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   void updatePostsList() async {
-    List<Post> list =  await FirestoreService().getUserPosts(globals.user!.uid);
-    setState((){
-      posts.insertAll(0, list);
-    });
-  }
-
-  void dragEvent(Post post, String direction) async {
-    setState(() {
-      reactedIDs.add(post.uid);
-      
-      if (posts.indexOf(post) < posts.length - 1){
-        posts.removeRange(posts.indexOf(post) + 1, posts.length);
-        debugPrint(posts.length.toString());
-
-        if (posts.length <= 1){
-          updatePostsList();
-        }
+    List<DraggableCard> tempCards = [];
+    List<Post> tempPosts = await FirestoreService().getUserPosts('VM6CxlTAbOTe2JKoyJDrnfVIegh2');
+    for (var post in tempPosts) {
+      if (1==1 || !posts.any((exPost) => exPost.uid == post.uid)) {
+        tempCards.add( DraggableCard (
+          key: UniqueKey(),
+          post: post, 
+          dragEvent: dragEvent
+        ));
       }
+    }
+    setState((){
+      posts.insertAll(0, tempPosts);
+      cards.insertAll(0, tempCards);  
     });
   }
+
+  void dragEvent(Key key, String direction) async {
+    int indexToRemove = cards.indexWhere((c) => c.key == key);
+    if (indexToRemove != -1 && indexToRemove < cards.length - 1) {
+      setState(() {
+        cards.removeRange(indexToRemove + 1, cards.length);
+      });
+    }
+
+    if (cards.length <= 2) {
+      updatePostsList();
+    }
+  }
+
 }
