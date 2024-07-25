@@ -81,7 +81,7 @@ class _FeedPageState extends State<FeedPage> {
       if (!posts.any((exPost) => exPost.uid == post.uid)) {
         tempCards.add( DraggableCard (
           key: UniqueKey(),
-          post: post, 
+          post: post,
           dragEvent: dragEvent
         ));
       }
