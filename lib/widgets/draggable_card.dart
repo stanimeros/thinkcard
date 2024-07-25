@@ -31,8 +31,8 @@ class _DraggableCardState extends State<DraggableCard> {
   Widget build(BuildContext context) {
     double sWidth = MediaQuery.sizeOf(context).width;
     double sHeight = MediaQuery.sizeOf(context).height;
-    double hLimit = sHeight/4;
-    double wLimit = sWidth/4;
+    double hLimit = sHeight/16;
+    double wLimit = sWidth/8;
 
     return GestureDetector(
       onPanUpdate: (details) {
@@ -47,28 +47,31 @@ class _DraggableCardState extends State<DraggableCard> {
             //X AXIS
             if (offset.dx > 0){
               setState(() {
-                offset = Offset(sWidth*1, 0);
+                offset = Offset(sWidth*1.5, 0);
               });
               widget.dragEvent(widget.key, 'Right');
             }else{
               setState(() {
-                offset = Offset(-sWidth*1, 0);
+                offset = Offset(-sWidth*1.5, 0);
               });
               widget.dragEvent(widget.key, 'Left');
             }
           }else{
             //Y AXIS
-            if (offset.dy > 0){
-              setState(() {
-                offset = Offset(0, sHeight);
-              });
-              widget.dragEvent(widget.key, 'Up');
-            }else{
-              setState(() {
-                offset = Offset(0, -sHeight);
-              });
-              widget.dragEvent(widget.key, 'Down');
-            }
+            // if (offset.dy > 0){
+            //   setState(() {
+            //     offset = Offset(0, sHeight);
+            //   });
+            //   widget.dragEvent(widget.key, 'Up');
+            // }else{
+            //   setState(() {
+            //     offset = Offset(0, -sHeight);
+            //   });
+            //   widget.dragEvent(widget.key, 'Down');
+            // }
+            setState(() {
+              offset = Offset.zero;
+            });
           }
         }else{
           setState(() {
@@ -81,7 +84,7 @@ class _DraggableCardState extends State<DraggableCard> {
         transform: Matrix4.identity()
           ..translate(offset.dx, offset.dy)
           ..rotateZ(offset.dx / sWidth * 15 * pi / 180),
-        duration: const Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 150),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20)
         ),

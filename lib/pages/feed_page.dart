@@ -40,13 +40,16 @@ class _FeedPageState extends State<FeedPage> {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: Stack(
-              children: [
-                const SkeletonCard(),
-                Stack(
-                  children: cards
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  const SkeletonCard(),
+                  // Stack(
+                  //   children: cards
+                  // ),
+                ],
+              ),
             )
           )
         ],
@@ -58,7 +61,7 @@ class _FeedPageState extends State<FeedPage> {
     List<DraggableCard> tempCards = [];
     List<Post> tempPosts = await FirestoreService().getUserPosts('VM6CxlTAbOTe2JKoyJDrnfVIegh2');
     for (var post in tempPosts) {
-      if (1==1 || !posts.any((exPost) => exPost.uid == post.uid)) {
+      if (!posts.any((exPost) => exPost.uid == post.uid)) {
         tempCards.add( DraggableCard (
           key: UniqueKey(),
           post: post, 

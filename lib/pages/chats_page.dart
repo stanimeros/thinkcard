@@ -64,7 +64,7 @@ class _ChatsPageState extends State<ChatsPage>{
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: ListTile(
-                                    tileColor: globals.skeletonTileColor,
+                                    tileColor: globals.skeletonColor,
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     leading: ProfilePicture(
                                       user: friend, 

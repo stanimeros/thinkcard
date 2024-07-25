@@ -16,7 +16,7 @@ class SkeletonChat extends StatelessWidget {
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: globals.skeletonTileColor,
+        color: globals.skeletonColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
+import 'package:thinkcard/common/globals.dart' as globals;
 
 class CreatePage extends StatefulWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -124,7 +125,7 @@ class _CreatePageState extends State<CreatePage> {
           onTap: pickImages,
           child: Container(
             height: 120.0,
-            color: Colors.grey[300],
+            color: globals.skeletonColor,
             child: imageFiles.isEmpty
               ? const Center(child: Text('Tap to select images'))
               : ListView(

@@ -95,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
               itemCount: results.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  tileColor: globals.skeletonTileColor,
+                  tileColor: globals.skeletonColor,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),              
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   onTap: () {
