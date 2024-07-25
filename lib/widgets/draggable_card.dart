@@ -99,10 +99,11 @@ class _DraggableCardState extends State<DraggableCard> {
               ..rotateZ(offset.dx / sWidth * 15 * pi / 180),
             duration: const Duration(milliseconds: 150),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20)
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Stack(
               children: [
+                const SkeletonCard(),
                 PageView.builder(
                   itemCount: widget.post.images.length,
                   scrollDirection: Axis.horizontal,
@@ -133,10 +134,9 @@ class _DraggableCardState extends State<DraggableCard> {
                         height: double.infinity,
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
-                          fadeInDuration: Duration.zero,
+                          fadeInDuration: const Duration(milliseconds: 250),
                           cacheKey: widget.post.images[index],
                           imageUrl: widget.post.images[index],
-                          placeholder: (context, url) => const SkeletonCard()
                         ),
                       ),
                     );
@@ -261,7 +261,7 @@ class _DraggableCardState extends State<DraggableCard> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           );

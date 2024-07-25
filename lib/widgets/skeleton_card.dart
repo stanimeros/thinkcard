@@ -41,6 +41,7 @@ class SkeletonCard extends StatelessWidget {
               controller.repeat();
             },
           ).slideX(
+            delay: const Duration(milliseconds: 300),
             duration: const Duration(milliseconds: 2500),
             curve: Curves.linear,
             begin: -1.5,
