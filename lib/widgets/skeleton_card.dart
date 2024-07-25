@@ -10,34 +10,44 @@ class SkeletonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: globals.skeletonColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: globals.skeletonShadowColor,
-              spreadRadius: 12,
-              blurRadius: 24,
-            )
-          ]
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: globals.backgroundColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
-      )
-      .animate(
-        onComplete: (controller) {
-          controller.repeat();
-        },
-      ).slideX(
-        duration: const Duration(milliseconds: 2500),
-        curve: Curves.linear,
-        begin: -1.5,
-        end: 1.5,
-      ),
+        Container(
+          width: double.infinity,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            color: globals.skeletonColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: globals.skeletonShadowColor,
+                  spreadRadius: 12,
+                  blurRadius: 24,
+                )
+              ]
+            ),
+          )
+          .animate(
+            onComplete: (controller) {
+              controller.repeat();
+            },
+          ).slideX(
+            duration: const Duration(milliseconds: 2500),
+            curve: Curves.linear,
+            begin: -1.5,
+            end: 1.5,
+          ),
+        ),
+      ],
     );
   }
 }

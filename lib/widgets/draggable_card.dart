@@ -9,7 +9,6 @@ import 'package:thinkcard/common/post.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
 import 'package:thinkcard/pages/user_page.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/widgets/skeleton_card.dart';
 
 class DraggableCard extends StatefulWidget {
@@ -52,12 +51,12 @@ class _DraggableCardState extends State<DraggableCard> {
             //X AXIS
             if (offset.dx > 0){
               setState(() {
-                offset = Offset(sWidth*1.5, 0);
+                offset = Offset(sWidth*1.6, 0);
               });
               widget.dragEvent(widget.key, 'Right');
             }else{
               setState(() {
-                offset = Offset(-sWidth*1.5, 0);
+                offset = Offset(-sWidth*1.6, 0);
               });
               widget.dragEvent(widget.key, 'Left');
             }
@@ -88,11 +87,11 @@ class _DraggableCardState extends State<DraggableCard> {
         future: FirestoreService().getUser(widget.post.uid),
         builder: (context, snapshot) {
           AppUser? user = snapshot.data;
-
+      
           if (user == null){
             return const SkeletonCard();
           }
-
+      
           return AnimatedContainer(
             clipBehavior: Clip.hardEdge,
             transform: Matrix4.identity()
@@ -135,16 +134,9 @@ class _DraggableCardState extends State<DraggableCard> {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           fadeInDuration: Duration.zero,
-                          fadeOutDuration: Duration.zero,
-                          placeholderFadeInDuration: Duration.zero,
                           cacheKey: widget.post.images[index],
                           imageUrl: widget.post.images[index],
-                          placeholder: (context, url) => Container(
-                            decoration: BoxDecoration(
-                              color: globals.skeletonColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          )
+                          placeholder: (context, url) => const SkeletonCard()
                         ),
                       ),
                     );

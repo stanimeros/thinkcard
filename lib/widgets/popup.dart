@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:thinkcard/common/globals.dart' as globals;
 
 class PopUp extends AlertDialog {
   final String textBtn1;
@@ -24,6 +25,7 @@ class PopUp extends AlertDialog {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: GoogleFonts.manrope(
         fontSize: 17,
+        color: globals.textColor
       ),
       title: Text(
         textTitle,
