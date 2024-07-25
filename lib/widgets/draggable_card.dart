@@ -53,26 +53,15 @@ class _DraggableCardState extends State<DraggableCard> {
               setState(() {
                 offset = Offset(sWidth*1.6, 0);
               });
-              widget.dragEvent(widget.key, 'Right');
+              widget.dragEvent(widget.key, widget.post, 'Right');
             }else{
               setState(() {
                 offset = Offset(-sWidth*1.6, 0);
               });
-              widget.dragEvent(widget.key, 'Left');
+              widget.dragEvent(widget.key, widget.post, 'Left');
             }
           }else{
-            //Y AXIS
-            // if (offset.dy > 0){
-            //   setState(() {
-            //     offset = Offset(0, sHeight);
-            //   });
-            //   widget.dragEvent(widget.key, 'Up');
-            // }else{
-            //   setState(() {
-            //     offset = Offset(0, -sHeight);
-            //   });
-            //   widget.dragEvent(widget.key, 'Down');
-            // }
+            //Y AXIS REMOVED
             setState(() {
               offset = Offset.zero;
             });
@@ -143,7 +132,7 @@ class _DraggableCardState extends State<DraggableCard> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: SafeArea(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,

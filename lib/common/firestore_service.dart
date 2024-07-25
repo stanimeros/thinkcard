@@ -27,6 +27,19 @@ class FirestoreService {
     }
   }
 
+  Future<List<Post>> getRandomPosts() async {
+    final firestore = FirebaseFirestore.instance;
+    final postsCollection = firestore.collection('posts');
+
+    // Get all posts
+    final querySnapshot = await postsCollection.get();
+    final allPosts = querySnapshot.docs;
+    allPosts.shuffle();
+    
+    // Convert to List<Post>
+    return allPosts.take(4).map((doc) => Post.fromFirestore(doc)).toList();
+  }
+
   Future<List<Post>> getUserPosts(String uid) async {
     try {
       var querySnapshot = await firestore
@@ -41,6 +54,18 @@ class FirestoreService {
       debugPrint('Error getUserPosts: $e');
       return [];
     }
+  }
+
+  Future<void> incrementPostReaction(String postId, bool isLike) async {
+    final postRef = firestore.collection('posts').doc(postId);
+
+    // Define the field to update and the increment value
+    final updateData = isLike
+        ? {'likes': FieldValue.increment(1)}
+        : {'dislikes': FieldValue.increment(1)};
+
+    // Update the post with the incremented field value
+    await postRef.update(updateData);
   }
 
   Future<List<AppUser>> searchUsers(String query) async {

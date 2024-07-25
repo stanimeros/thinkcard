@@ -94,31 +94,34 @@ class _SearchPageState extends State<SearchPage> {
               padding: EdgeInsets.zero,
               itemCount: results.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  tileColor: globals.skeletonColor,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),              
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      SlidePageRoute(page: UserPage(user: results[index]))
-                    );
-                  },
-                  leading: ProfilePicture(
-                    user: results[index], 
-                    size: 42, 
-                    color: globals.textColor,
-                    backgroundColor: globals.backgroundColor
-                  ),
-                  title: Row(
-                    children: [
-                      Text(
-                        '@${results[index].username}',
-                        style: const TextStyle(
-                          fontSize: 18
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: ListTile(
+                    tileColor: globals.skeletonColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),              
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        SlidePageRoute(page: UserPage(user: results[index]))
+                      );
+                    },
+                    leading: ProfilePicture(
+                      user: results[index], 
+                      size: 42, 
+                      color: globals.textColor,
+                      backgroundColor: globals.cachedImageColor
+                    ),
+                    title: Row(
+                      children: [
+                        Text(
+                          '@${results[index].username}',
+                          style: const TextStyle(
+                            fontSize: 18
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

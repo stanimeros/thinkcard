@@ -76,7 +76,7 @@ class _FeedPageState extends State<FeedPage> {
 
   void updatePostsList() async {
     List<DraggableCard> tempCards = [];
-    List<Post> tempPosts = await FirestoreService().getUserPosts('VM6CxlTAbOTe2JKoyJDrnfVIegh2');
+    List<Post> tempPosts = await FirestoreService().getRandomPosts();
     for (var post in tempPosts) {
       if (!posts.any((exPost) => exPost.uid == post.uid)) {
         tempCards.add( DraggableCard (
@@ -92,7 +92,9 @@ class _FeedPageState extends State<FeedPage> {
     });
   }
 
-  void dragEvent(Key key, String direction) async {
+  void dragEvent(Key key, Post post, String direction) async {
+    FirestoreService().incrementPostReaction(post.id, direction == 'Right');
+
     int indexToRemove = cards.indexWhere((c) => c.key == key);
     if (indexToRemove != -1 && indexToRemove < cards.length - 1) {
       setState(() {
