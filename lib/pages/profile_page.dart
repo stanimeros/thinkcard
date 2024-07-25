@@ -50,21 +50,25 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                   ),
                 ),
                 const Spacer(),
-                IconButton(
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      SlidePageRoute(page: ProfileEditPage(user: user))
-                    ).then((value) => setState(() {
-                      setState(() {
-                        user = globals.user!;
-                      });
-                    }));
-                  }, 
-                  icon: const Icon(
-                    size: 22,
-                    LucideIcons.pencil
-                  )
+                CircleAvatar(
+                  backgroundColor: globals.skeletonColor,
+                  foregroundColor: globals.textColor,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        SlidePageRoute(page: ProfileEditPage(user: user))
+                      ).then((value) => setState(() {
+                        setState(() {
+                          user = globals.user!;
+                        });
+                      }));
+                    }, 
+                    icon: const Icon(
+                      size: 22,
+                      LucideIcons.pencil
+                    )
+                  ),
                 )
               ],
             ),

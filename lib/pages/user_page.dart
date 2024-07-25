@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
-import 'package:thinkcard/widgets/chat.dart';
+import 'package:thinkcard/pages/chat_page.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
@@ -75,7 +75,7 @@ class _UserPageState extends State<UserPage>{
                         onPressed: (){
                           Navigator.push(
                             context,
-                            SlidePageRoute(page: Chat(user: widget.user))
+                            SlidePageRoute(page: ChatPage(user: widget.user))
                           );
                         }, 
                         icon: const Icon(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/post.dart';
+import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/widgets/draggable_card.dart';
 import 'package:thinkcard/widgets/skeleton_card.dart';
 
@@ -28,14 +30,29 @@ class _FeedPageState extends State<FeedPage> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-         const  Row(
+          Row(
             children: [
-              Text(
+              const Text(
                 'Thinkcard',
                 style: TextStyle(
                   fontSize: 24
                 ),
               ),
+              const Spacer(),
+              CircleAvatar(
+                backgroundColor: globals.skeletonColor,
+                foregroundColor: globals.textColor,
+                child: IconButton(
+                  splashColor: globals.skeletonColor,
+                  onPressed: () {
+                
+                  }, 
+                  icon: const Icon(
+                    size: 20,
+                    LucideIcons.bell
+                  )
+                ),
+              )
             ],
           ),
           const SizedBox(height: 16),

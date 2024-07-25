@@ -94,29 +94,33 @@ class _CreatePageState extends State<CreatePage> {
                 ),
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () async{
-                  if (!isUploading){
-                    try{
-                      setState(() {
-                        isUploading = true;
-                      });
-                      await upload();
-                    }catch(e){
-                      debugPrint('Error $e');
-                    }finally{
-                      setState(() {
-                        isUploading = false;
-                      });
+              CircleAvatar(
+                backgroundColor: globals.skeletonColor,
+                foregroundColor: globals.textColor,
+                child: IconButton(
+                  onPressed: () async{
+                    if (!isUploading){
+                      try{
+                        setState(() {
+                          isUploading = true;
+                        });
+                        await upload();
+                      }catch(e){
+                        debugPrint('Error $e');
+                      }finally{
+                        setState(() {
+                          isUploading = false;
+                        });
+                      }
                     }
-                  }
-                }, 
-                icon: isUploading ?
-                const CustomLoader()
-                : const Icon(
-                  size: 22,
-                  LucideIcons.uploadCloud
-                )
+                  }, 
+                  icon: isUploading ?
+                  const CustomLoader()
+                  : const Icon(
+                    size: 22,
+                    LucideIcons.uploadCloud
+                  )
+                ),
               )
             ],
           ),

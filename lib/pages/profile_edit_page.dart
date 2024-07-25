@@ -95,14 +95,18 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             children: [
               Row(
                 children: [
-                  IconButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    }, 
-                    icon: const Icon(
-                      size: 22,
-                      LucideIcons.arrowLeft
-                    )
+                CircleAvatar(
+                  backgroundColor: globals.skeletonColor,
+                  foregroundColor: globals.textColor,
+                    child: IconButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      }, 
+                      icon: const Icon(
+                        size: 22,
+                        LucideIcons.arrowLeft
+                      )
+                    ),
                   ),
                   const Spacer(),
                   const Text(
@@ -112,26 +116,30 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     ),
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () async{
-                      if (!isSaving){
-                        setState(() {
-                          isSaving = true;
-                        });
-
-                        await saveChanges();
-
-                        setState(() {
-                          isSaving = false;
-                        });
-                      }
-                    }, 
-                    icon: isSaving ?
-                      const CustomLoader()
-                      : const Icon(
-                      size: 22,
-                      LucideIcons.saveAll
-                    )
+                  CircleAvatar(
+                    backgroundColor: globals.skeletonColor,
+                    foregroundColor: globals.textColor,
+                    child: IconButton(
+                      onPressed: () async{
+                        if (!isSaving){
+                          setState(() {
+                            isSaving = true;
+                          });
+                    
+                          await saveChanges();
+                    
+                          setState(() {
+                            isSaving = false;
+                          });
+                        }
+                      }, 
+                      icon: isSaving ?
+                        const CustomLoader()
+                        : const Icon(
+                        size: 22,
+                        LucideIcons.saveAll
+                      )
+                    ),
                   ),
                 ],
               ),

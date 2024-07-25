@@ -7,19 +7,19 @@ import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 
-class Chat extends StatefulWidget {
+class ChatPage extends StatefulWidget {
   final AppUser user;
 
-  const Chat({
+  const ChatPage({
     super.key,
     required this.user
   });
 
   @override
-  State<Chat> createState() => _ChatState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatState extends State<Chat>{
+class _ChatPageState extends State<ChatPage>{
 
   TextEditingController messageController = TextEditingController();
 
@@ -48,16 +48,20 @@ class _ChatState extends State<Chat>{
             children: [
               Row(
                 children: [
-                  IconButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    }, 
-                    icon: const Icon(
-                      size: 22,
-                      LucideIcons.arrowLeft
-                    )
+                  CircleAvatar(
+                    backgroundColor: globals.skeletonColor,
+                    foregroundColor: globals.textColor,
+                    child: IconButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      }, 
+                      icon: const Icon(
+                        size: 22,
+                        LucideIcons.arrowLeft
+                      )
+                    ),
                   ),
-                  const SizedBox(width:8),
+                  const SizedBox(width: 16),
                   ProfilePicture(
                     user: widget.user, 
                     size: 50, 

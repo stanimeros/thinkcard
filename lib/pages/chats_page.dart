@@ -5,7 +5,7 @@ import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
 import 'package:thinkcard/common/globals.dart' as globals;
-import 'package:thinkcard/widgets/chat.dart';
+import 'package:thinkcard/pages/chat_page.dart';
 import 'package:thinkcard/widgets/messenger.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 import 'package:thinkcard/widgets/skeleton_chat.dart';
@@ -91,7 +91,7 @@ class _ChatsPageState extends State<ChatsPage>{
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        SlidePageRoute(page: Chat(user: friend))
+                                        SlidePageRoute(page: ChatPage(user: friend))
                                       );
                                     },
                                   ),
