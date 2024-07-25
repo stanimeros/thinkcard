@@ -121,9 +121,16 @@ class _DraggableCardState extends State<DraggableCard> {
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       fadeInDuration: Duration.zero,
+                      fadeOutDuration: Duration.zero,
+                      placeholderFadeInDuration: Duration.zero,
                       cacheKey: widget.post.images[index],
                       imageUrl: widget.post.images[index],
-                      // placeholder: (context, url) => const PlaceholderSuggestion()
+                      placeholder: (context, url) => Container(
+                        decoration: BoxDecoration(
+                          color: globals.skeletonColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      )
                     ),
                   ),
                 );

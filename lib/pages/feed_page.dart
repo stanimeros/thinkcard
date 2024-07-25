@@ -45,9 +45,9 @@ class _FeedPageState extends State<FeedPage> {
               child: Stack(
                 children: [
                   const SkeletonCard(),
-                  // Stack(
-                  //   children: cards
-                  // ),
+                  Stack(
+                    children: cards
+                  ),
                 ],
               ),
             )
