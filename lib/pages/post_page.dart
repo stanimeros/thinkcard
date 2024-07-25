@@ -9,6 +9,7 @@ import 'package:thinkcard/common/post.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:thinkcard/widgets/popup.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
+import 'package:thinkcard/widgets/skeleton_card.dart';
 
 class PostPage extends StatefulWidget {
   final Post post;
@@ -48,7 +49,6 @@ class _PostPageState extends State<PostPage> {
     return Hero(
       tag: 'post-${widget.post.id}',
       child: Scaffold(
-        backgroundColor: Colors.transparent,
         body: Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
@@ -89,7 +89,7 @@ class _PostPageState extends State<PostPage> {
                         fadeInDuration: Duration.zero,
                         cacheKey: widget.post.images[index],
                         imageUrl: widget.post.images[index],
-                        // placeholder: (context, url) => const PlaceholderSuggestion()
+                        placeholder: (context, url) => const SkeletonCard()
                       ),
                     ),
                   );
