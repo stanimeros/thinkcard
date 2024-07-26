@@ -139,8 +139,12 @@ class _DraggableCardState extends State<DraggableCard> {
                                 gradient: LinearGradient(
                                   colors: 
                                   offset.dx > 0 ?
-                                  [const Color.fromARGB(200, 70, 250, 110), Colors.transparent]
-                                  : [const Color.fromARGB(200, 250, 70, 110), Colors.transparent],
+                                  [ Color.fromARGB(
+                                    ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100, 
+                                    70, 250, 110), Colors.transparent]
+                                  : [ Color.fromARGB(
+                                    ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100,
+                                    250, 70, 110), Colors.transparent],
                                   stops: const [0.02, 1],
                                   begin: const Alignment(0.0, 1.0),
                                   end: const Alignment(0.0, -2),
@@ -166,7 +170,7 @@ class _DraggableCardState extends State<DraggableCard> {
                               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: const Color.fromARGB(255, 220, 220, 220)
+                                color: globals.skeletonLightColor
                               ),
                               child: Row(
                                 children: [

@@ -5,7 +5,7 @@ class DarkTheme {
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.cyan,
+        seedColor: Colors.purple,
         brightness: Brightness.dark,
       ),
       textTheme: TextTheme(
@@ -17,7 +17,6 @@ class DarkTheme {
         bodyLarge: GoogleFonts.manrope(),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        // selectedItemColor: const Color.fromARGB(255, 35, 35, 35),
         selectedLabelStyle: GoogleFonts.manrope(
           fontWeight: FontWeight.bold,
           fontSize: 12
@@ -42,9 +41,6 @@ class DarkTheme {
             fontSize: 16
           )),
           padding: const WidgetStatePropertyAll(EdgeInsets.all(12)),
-          // backgroundColor: const WidgetStatePropertyAll(Color.fromARGB(255, 230, 230, 230)),
-          // foregroundColor:const WidgetStatePropertyAll(Colors.black),
-          // overlayColor: const WidgetStatePropertyAll(Color.fromARGB(255, 220, 220, 220))
         )
       ),
     );

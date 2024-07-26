@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/firestore_service.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/widgets/custom_loader.dart';
 import 'package:thinkcard/widgets/popup.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
@@ -169,7 +168,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                         user: widget.user,
                         size: 85,
                         color: Theme.of(context).textTheme.bodyMedium!.color!,
-                        backgroundColor: globals.skeletonDarkColor.withOpacity(0.75)
+                        backgroundColor: Theme.of(context).highlightColor
+
                       )
                     ),
                   ),

@@ -14,7 +14,7 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin{
 
   List<Post> posts = [];
   List<DraggableCard> cards = [];
@@ -24,9 +24,13 @@ class _FeedPageState extends State<FeedPage> {
     super.initState();
     updatePostsList();
   }
+    
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     return Padding(
@@ -115,5 +119,4 @@ class _FeedPageState extends State<FeedPage> {
       updatePostsList();
     }
   }
-
 }

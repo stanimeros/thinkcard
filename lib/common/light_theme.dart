@@ -5,7 +5,7 @@ class LightTheme {
   static ThemeData get themeData {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.cyan,
+        seedColor: Colors.purple,
         brightness: Brightness.light,
       ),
       textTheme: TextTheme(
