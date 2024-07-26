@@ -194,6 +194,7 @@ class FirestoreService {
         await userDocRef.set({
           'username': username
         }, SetOptions(merge: true));
+        globals.user?.username = username;
       }
     }catch(e){
       debugPrint('Error setUsername: $e');
