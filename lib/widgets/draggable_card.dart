@@ -118,15 +118,36 @@ class _DraggableCardState extends State<DraggableCard> {
                           }
                         }
                       },
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          fadeInDuration: const Duration(milliseconds: 250),
-                          cacheKey: widget.post.images[index],
-                          imageUrl: widget.post.images[index],
-                        ),
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              fadeInDuration: const Duration(milliseconds: 250),
+                              cacheKey: widget.post.images[index],
+                              imageUrl: widget.post.images[index],
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: offset.dx.abs() > wLimit ? 1 : 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: 
+                                  offset.dx > 0 ?
+                                  [const Color.fromARGB(200, 70, 250, 110), Colors.transparent]
+                                  : [const Color.fromARGB(200, 250, 70, 110), Colors.transparent],
+                                  stops: const [0.02, 1],
+                                  begin: const Alignment(0.0, 1.0),
+                                  end: const Alignment(0.0, -2),
+                                )
+                              )
+                            )
+                          )
+                        ],
                       ),
                     );
                   },
