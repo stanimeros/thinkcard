@@ -41,6 +41,7 @@ class _DraggableCardState extends State<DraggableCard> {
 
     return GestureDetector(
       onPanUpdate: (details) {
+        debugPrint(offset.dx.toString());
         setState(() {
           offset += details.delta;
         });
@@ -138,12 +139,14 @@ class _DraggableCardState extends State<DraggableCard> {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: 
-                                  offset.dx > 0 ?
-                                  [ Color.fromARGB(
-                                    ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100, 
+                                  offset.dx == 0 ?
+                                    [Colors.transparent, Colors.transparent]
+                                  : offset.dx > 0 ?
+                                    [ Color.fromARGB(
+                                      ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100, 
                                     70, 250, 110), Colors.transparent]
                                   : [ Color.fromARGB(
-                                    ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100,
+                                      ((offset.dx.abs() * 100) / sWidth / 2).toInt() + 100,
                                     250, 70, 110), Colors.transparent],
                                   stops: const [0.02, 1],
                                   begin: const Alignment(0.0, 1.0),
