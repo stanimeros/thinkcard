@@ -172,7 +172,7 @@ class _PostPageState extends State<PostPage> {
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: globals.backgroundColor
+                              color: Theme.of(context).scaffoldBackgroundColor
                             ),
                             child: Row(
                               children: [
@@ -230,8 +230,8 @@ class _PostPageState extends State<PostPage> {
                               ProfilePicture(
                                 user: widget.user, 
                                 size: 36,
-                                color: globals.textColor, 
-                                backgroundColor: globals.backgroundColor
+                                color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                backgroundColor: Theme.of(context).scaffoldBackgroundColor
                               ),
                               const SizedBox(
                                 width: 4,

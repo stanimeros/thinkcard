@@ -3,7 +3,6 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/post.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/common/theme_provider.dart';
 import 'package:thinkcard/widgets/draggable_card.dart';
 import 'package:thinkcard/widgets/skeleton_card.dart';
@@ -44,10 +43,10 @@ class _FeedPageState extends State<FeedPage> {
               ),
               const Spacer(),
               CircleAvatar(
-                backgroundColor: globals.skeletonColor,
-                foregroundColor: globals.textColor,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                 child: IconButton(
-                  splashColor: globals.skeletonColor,
+                  splashColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
                   onPressed: () {
                     setState(() {
                       themeProvider.setThemeMode(

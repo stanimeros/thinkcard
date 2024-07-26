@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/app_user.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 import 'package:thinkcard/pages/chat_page.dart';
 import 'package:thinkcard/widgets/messenger.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
@@ -64,13 +63,13 @@ class _ChatsPageState extends State<ChatsPage>{
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: ListTile(
-                                    tileColor: globals.skeletonColor,
+                                    tileColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     leading: ProfilePicture(
                                       user: friend, 
                                       size: 42, 
-                                      color: globals.textColor, 
-                                      backgroundColor: globals.cachedImageColor
+                                      color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                      backgroundColor: Theme.of(context).highlightColor
                                     ),
                                     title: Row(
                                       children: [

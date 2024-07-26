@@ -22,14 +22,13 @@ class SkeletonCard extends StatelessWidget {
           width: double.infinity,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            color: globals.skeletonColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: globals.skeletonShadowColor,
+                  color: Color.fromARGB(15, 255, 255, 255),
                   spreadRadius: 12,
                   blurRadius: 24,
                 )

@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                 ProfilePicture(
                   user: user, 
                   size: 50, 
-                  color: Theme.of(context).textTheme.titleMedium!.color!, 
+                  color: Theme.of(context).textTheme.bodyMedium!.color!, 
                   backgroundColor: Theme.of(context).highlightColor, 
                 ),
                 const SizedBox(width: 8),
@@ -51,8 +51,8 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                 ),
                 const Spacer(),
                 CircleAvatar(
-                  backgroundColor: globals.skeletonColor,
-                  foregroundColor: globals.textColor,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                  foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                   child: IconButton(
                     onPressed: (){
                       Navigator.push(

@@ -166,7 +166,7 @@ class _DraggableCardState extends State<DraggableCard> {
                               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: globals.backgroundColor
+                                color: const Color.fromARGB(255, 220, 220, 220)
                               ),
                               child: Row(
                                 children: [
@@ -246,8 +246,8 @@ class _DraggableCardState extends State<DraggableCard> {
                                   ProfilePicture(
                                     user: user, 
                                     size: 36,
-                                    color: globals.textColor,
-                                    backgroundColor: globals.backgroundColor
+                                    color: Theme.of(context).textTheme.bodyMedium!.color!,
+                                    backgroundColor: Theme.of(context).scaffoldBackgroundColor
                                   ),
                                   const SizedBox(
                                     width: 4,

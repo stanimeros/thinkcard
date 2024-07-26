@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 
 class SkeletonChat extends StatelessWidget {
   final double height;
@@ -12,11 +11,12 @@ class SkeletonChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO
     return Container(
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: globals.skeletonColor,
+        color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
@@ -24,7 +24,7 @@ class SkeletonChat extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: globals.skeletonShadowColor,
+              color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.8),
               spreadRadius: 12,
               blurRadius: 24,
             )

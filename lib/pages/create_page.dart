@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 
 class CreatePage extends StatefulWidget {
   final user = FirebaseAuth.instance.currentUser!;
@@ -95,8 +94,8 @@ class _CreatePageState extends State<CreatePage> {
               ),
               const Spacer(),
               CircleAvatar(
-                backgroundColor: globals.skeletonColor,
-                foregroundColor: globals.textColor,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                 child: IconButton(
                   onPressed: () async{
                     if (!isUploading){
@@ -129,7 +128,7 @@ class _CreatePageState extends State<CreatePage> {
           onTap: pickImages,
           child: Container(
             height: 120.0,
-            color: globals.skeletonColor,
+            color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
             child: imageFiles.isEmpty
               ? const Center(child: Text('Tap to select images'))
               : ListView(
@@ -164,7 +163,7 @@ class _CreatePageState extends State<CreatePage> {
                               },
                               child: CircleAvatar(
                                 radius: 12,
-                                backgroundColor: globals.backgroundColor,
+                                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                                 child: const Icon(
                                   size: 18,
                                   LucideIcons.x

@@ -95,8 +95,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               Row(
                 children: [
                 CircleAvatar(
-                  backgroundColor: globals.skeletonColor,
-                  foregroundColor: globals.textColor,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                  foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                     child: IconButton(
                       onPressed: (){
                         Navigator.pop(context);
@@ -116,8 +116,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ),
                   const Spacer(),
                   CircleAvatar(
-                    backgroundColor: globals.skeletonColor,
-                    foregroundColor: globals.textColor,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                    foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                     child: IconButton(
                       onPressed: () async{
                         if (!isSaving){
@@ -161,14 +161,14 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       alignment: Alignment.center,
                       child: newProfilePicture != null ?
                       Image.file(
-                        width: 100,
-                        height: 100,
+                        width: 85,
+                        height: 85,
                         fit: BoxFit.cover,
                         File(newProfilePicture!.path)
                       ) : ProfilePicture(
                         user: widget.user,
                         size: 85,
-                        color: globals.backgroundColor,
+                        color: Theme.of(context).textTheme.bodyMedium!.color!,
                         backgroundColor: globals.skeletonDarkColor.withOpacity(0.75)
                       )
                     ),

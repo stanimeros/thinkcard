@@ -7,7 +7,6 @@ import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/slide_page_route.dart';
 import 'package:thinkcard/pages/user_page.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});
@@ -97,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: ListTile(
-                    tileColor: globals.skeletonColor,
+                    tileColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),              
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     onTap: () {
@@ -109,8 +108,8 @@ class _SearchPageState extends State<SearchPage> {
                     leading: ProfilePicture(
                       user: results[index], 
                       size: 42, 
-                      color: globals.textColor,
-                      backgroundColor: globals.cachedImageColor
+                      color: Theme.of(context).textTheme.bodyMedium!.color!,
+                      backgroundColor: Theme.of(context).highlightColor
                     ),
                     title: Row(
                       children: [

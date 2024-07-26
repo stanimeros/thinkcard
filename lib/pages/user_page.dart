@@ -7,7 +7,6 @@ import 'package:thinkcard/widgets/custom_loader.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 import 'package:thinkcard/widgets/user_posts.dart';
-import 'package:thinkcard/common/globals.dart' as globals;
 
 class UserPage extends StatefulWidget {
   final AppUser user;
@@ -47,21 +46,25 @@ class _UserPageState extends State<UserPage>{
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        }, 
-                        icon: const Icon(
-                          size: 22,
-                          LucideIcons.arrowLeft
-                        )
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                        foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
+                        child: IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          }, 
+                          icon: const Icon(
+                            size: 22,
+                            LucideIcons.arrowLeft
+                          )
+                        ),
                       ),
                       const SizedBox(width:8),
                       ProfilePicture(
                         user: user, 
                         size: 50, 
-                        color: globals.textColor, 
-                        backgroundColor: globals.cachedImageColor
+                        color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                        backgroundColor: Theme.of(context).highlightColor
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -71,17 +74,21 @@ class _UserPageState extends State<UserPage>{
                         ),
                       ),
                       const Spacer(),
-                      IconButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            SlidePageRoute(page: ChatPage(user: widget.user))
-                          );
-                        }, 
-                        icon: const Icon(
-                          size: 20,
-                          LucideIcons.messageCircle
-                        )
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                        foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
+                        child: IconButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              SlidePageRoute(page: ChatPage(user: widget.user))
+                            );
+                          }, 
+                          icon: const Icon(
+                            size: 20,
+                            LucideIcons.messageCircle
+                          )
+                        ),
                       ),
                     ],
                   ),

@@ -49,8 +49,8 @@ class _ChatPageState extends State<ChatPage>{
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: globals.skeletonColor,
-                    foregroundColor: globals.textColor,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+                    foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                     child: IconButton(
                       onPressed: (){
                         Navigator.pop(context);
@@ -65,8 +65,8 @@ class _ChatPageState extends State<ChatPage>{
                   ProfilePicture(
                     user: widget.user, 
                     size: 50, 
-                    color: globals.textColor, 
-                    backgroundColor: globals.cachedImageColor
+                    color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                    backgroundColor: Theme.of(context).highlightColor
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -105,15 +105,15 @@ class _ChatPageState extends State<ChatPage>{
                                   ProfilePicture(
                                     user: globals.user!,
                                     size: 36,
-                                    color: globals.textColor, 
-                                    backgroundColor: globals.cachedImageColor
+                                    color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                    backgroundColor: Theme.of(context).highlightColor
                                   ),
                                 ]:[
                                   ProfilePicture(
                                     user: widget.user,
                                     size: 36,
-                                    color: globals.textColor, 
-                                    backgroundColor: globals.cachedImageColor
+                                    color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                    backgroundColor: Theme.of(context).highlightColor
                                   ),
                                   const SizedBox(width: 8),
                                   Flexible(
