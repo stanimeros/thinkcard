@@ -63,11 +63,12 @@ class _ChatsPageState extends State<ChatsPage>{
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: ListTile(
+                                    minTileHeight: 68,
                                     tileColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     leading: ProfilePicture(
                                       user: friend, 
-                                      size: 42, 
+                                      size: 42,
                                       color: Theme.of(context).textTheme.bodyMedium!.color!, 
                                       backgroundColor: Theme.of(context).highlightColor
                                     ),
@@ -100,7 +101,7 @@ class _ChatsPageState extends State<ChatsPage>{
 
                             return const Padding(
                               padding: EdgeInsets.symmetric(vertical: 8),
-                              child: SkeletonChat(height: 66),
+                              child: SkeletonChat(),
                             );
                           }
                         );
