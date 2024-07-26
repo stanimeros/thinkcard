@@ -41,7 +41,6 @@ class _DraggableCardState extends State<DraggableCard> {
 
     return GestureDetector(
       onPanUpdate: (details) {
-        debugPrint(offset.dx.toString());
         setState(() {
           offset += details.delta;
         });
