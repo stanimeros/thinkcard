@@ -13,16 +13,16 @@ class SkeletonChat extends StatelessWidget {
       height: 68,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
+        color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10)
       ),
       child: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(16, 0, 0, 0),
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                   spreadRadius: 12,
                   blurRadius: 24,
                 )
@@ -43,21 +43,26 @@ class SkeletonChat extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: Theme.of(context).highlightColor,
+                color: Theme.of(context).splashColor.withOpacity(0.25),
                 shape: BoxShape.circle
               ),
             ),
-            title: Container(
-              height: 13,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(16, 0, 0, 0),
-                borderRadius: BorderRadius.circular(10)
-              ),
+            title: Row(
+              children: [
+                Container(
+                  height: 13,
+                  width: 180,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).splashColor.withOpacity(0.25),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+              ],
             ),
             subtitle: Container(
               height: 13,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(16, 0, 0, 0),
+                color: Theme.of(context).splashColor.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(10)
               ),
             ),
