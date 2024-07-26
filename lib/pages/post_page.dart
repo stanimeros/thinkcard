@@ -172,7 +172,7 @@ class _PostPageState extends State<PostPage> {
                             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Theme.of(context).scaffoldBackgroundColor
+                              color: globals.skeletonLightColor
                             ),
                             child: Row(
                               children: [
