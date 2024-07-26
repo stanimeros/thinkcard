@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:thinkcard/common/firestore_service.dart';
 import 'package:thinkcard/common/post.dart';
 import 'package:thinkcard/common/globals.dart' as globals;
+import 'package:thinkcard/common/theme_provider.dart';
 import 'package:thinkcard/widgets/draggable_card.dart';
 import 'package:thinkcard/widgets/skeleton_card.dart';
 
@@ -26,6 +28,8 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -45,11 +49,17 @@ class _FeedPageState extends State<FeedPage> {
                 child: IconButton(
                   splashColor: globals.skeletonColor,
                   onPressed: () {
-                
+                    setState(() {
+                      themeProvider.setThemeMode(
+                        themeProvider.themeMode == ThemeMode.dark ?
+                        ThemeMode.light : ThemeMode.dark
+                      );
+                    });
                   }, 
-                  icon: const Icon(
+                  icon: Icon(
                     size: 20,
-                    LucideIcons.bell
+                    themeProvider.themeMode == ThemeMode.dark ?
+                    LucideIcons.sun : LucideIcons.moon
                   )
                 ),
               )

@@ -117,7 +117,7 @@ class _CreatePageState extends State<CreatePage> {
                   icon: isUploading ?
                   const CustomLoader()
                   : const Icon(
-                    size: 22,
+                    size: 20,
                     LucideIcons.uploadCloud
                   )
                 ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomTheme {
+class DarkTheme {
   static ThemeData get themeData {
     return ThemeData(
-      brightness: Brightness.light,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.cyan,
+        brightness: Brightness.dark,
+      ),
       textTheme: TextTheme(
         titleSmall: GoogleFonts.manrope(),
         titleMedium: GoogleFonts.manrope(),

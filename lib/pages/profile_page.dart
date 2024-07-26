@@ -39,8 +39,8 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                 ProfilePicture(
                   user: user, 
                   size: 50, 
-                  color: globals.textColor, 
-                  backgroundColor: globals.cachedImageColor
+                  color: Theme.of(context).textTheme.titleMedium!.color!, 
+                  backgroundColor: Theme.of(context).highlightColor, 
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                       }));
                     }, 
                     icon: const Icon(
-                      size: 22,
+                      size: 20,
                       LucideIcons.pencil
                     )
                   ),

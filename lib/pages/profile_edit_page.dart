@@ -135,8 +135,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       icon: isSaving ?
                         const CustomLoader()
                         : const Icon(
-                        size: 22,
-                        LucideIcons.saveAll
+                        size: 20,
+                        LucideIcons.save
                       )
                     ),
                   ),

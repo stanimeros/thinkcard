@@ -79,7 +79,7 @@ class _UserPageState extends State<UserPage>{
                           );
                         }, 
                         icon: const Icon(
-                          size: 22,
+                          size: 20,
                           LucideIcons.messageCircle
                         )
                       ),
