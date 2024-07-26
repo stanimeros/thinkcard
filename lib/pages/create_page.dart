@@ -162,10 +162,13 @@ class _CreatePageState extends State<CreatePage> {
                                   imageFiles.remove(imageFile);
                                 });
                               },
-                              child: const Icon(
-                                size: 25,
-                                color: Color.fromARGB(255, 235, 235, 235),
-                                LucideIcons.x
+                              child: CircleAvatar(
+                                radius: 12,
+                                backgroundColor: globals.backgroundColor,
+                                child: const Icon(
+                                  size: 18,
+                                  LucideIcons.x
+                                ),
                               )
                             ),
                           )

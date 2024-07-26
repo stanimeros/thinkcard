@@ -10,6 +10,7 @@ import 'package:thinkcard/common/slide_page_route.dart';
 import 'package:thinkcard/pages/user_page.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 import 'package:thinkcard/widgets/skeleton_card.dart';
+import 'package:thinkcard/common/globals.dart' as globals;
 
 class DraggableCard extends StatefulWidget {
   final Post post;
@@ -165,7 +166,7 @@ class _DraggableCardState extends State<DraggableCard> {
                               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color:const Color.fromARGB(255, 230, 230, 230)
+                                color: globals.backgroundColor
                               ),
                               child: Row(
                                 children: [
@@ -206,7 +207,7 @@ class _DraggableCardState extends State<DraggableCard> {
                               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color:const Color.fromARGB(255, 74, 74, 74)
+                                color: globals.skeletonDarkColor
                               ),
                               child: Row(
                                 children: [
@@ -242,7 +243,12 @@ class _DraggableCardState extends State<DraggableCard> {
                               },
                               child: Row(
                                 children: [
-                                  ProfilePicture(user: user, size: 36,color: Colors.black, backgroundColor: const Color.fromARGB(255, 235, 235, 235)),
+                                  ProfilePicture(
+                                    user: user, 
+                                    size: 36,
+                                    color: globals.textColor,
+                                    backgroundColor: globals.backgroundColor
+                                  ),
                                   const SizedBox(
                                     width: 4,
                                   ),

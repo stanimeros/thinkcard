@@ -147,6 +147,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
                   GestureDetector(
                     onTap: () {
                       pickImage();
@@ -165,9 +168,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                         File(newProfilePicture!.path)
                       ) : ProfilePicture(
                         user: widget.user,
-                        size: 100,
-                        color: Colors.white,
-                        backgroundColor: const Color.fromARGB(255, 180, 180, 180)
+                        size: 85,
+                        color: globals.backgroundColor,
+                        backgroundColor: globals.skeletonDarkColor.withOpacity(0.75)
                       )
                     ),
                   ),

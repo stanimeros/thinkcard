@@ -14,7 +14,7 @@ class SkeletonCard extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 75, 75, 75),
+            color: globals.skeletonDarkColor,
             borderRadius: BorderRadius.circular(20),
           ),
         ),
