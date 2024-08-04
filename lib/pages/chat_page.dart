@@ -78,58 +78,69 @@ class _ChatPageState extends State<ChatPage>{
                 ],
               ),
               Expanded(
-                child: StreamBuilder(
-                  stream: FirestoreService().getChatSnapshots(widget.user),
+                child: FutureBuilder(
+                  future: FirestoreService().createChat(widget.user.uid),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var chatData = snapshot.data!.data() as Map<String, dynamic>?;
-                      if (chatData != null) {
-                        var messages = (chatData['messages'] as List<dynamic>).cast<Map<String, dynamic>>();
-                        return ListView(
-                          reverse: true,
-                          shrinkWrap: true,
-                          children: messages.reversed.map<Widget>((message) {
-                            bool userMessage = message['uid'] == globals.user!.uid;
-                            return ListTile(
-                              contentPadding: const EdgeInsets.all(0),
-                              title: Row(
-                                mainAxisAlignment: userMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-                                children: userMessage ? [
-                                  Flexible(
-                                    child: Text(
-                                      message['content'],
-                                      textAlign: TextAlign.end,
-                                    )
-                                  ),
-                                  const SizedBox(width: 8),
-                                  ProfilePicture(
-                                    user: globals.user!,
-                                    size: 36,
-                                    color: Theme.of(context).textTheme.bodyMedium!.color!, 
-                                    backgroundColor: Theme.of(context).highlightColor
-                                  ),
-                                ]:[
-                                  ProfilePicture(
-                                    user: widget.user,
-                                    size: 36,
-                                    color: Theme.of(context).textTheme.bodyMedium!.color!, 
-                                    backgroundColor: Theme.of(context).highlightColor
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Flexible(
-                                    child: Text(message['content'])
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      } else {
-                        return const Messenger(message: 'No messages to display');
-                      }
-                    }else{
+                    if (snapshot.connectionState == ConnectionState.waiting){
                       return const CustomLoader();
+                    }else if (snapshot.hasError){
+                      return Messenger(message: 'Error ${snapshot.error}');
                     }
+
+                    return StreamBuilder(
+                      stream: FirestoreService().getChatSnapshots(widget.user),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var chatData = snapshot.data!.data() as Map<String, dynamic>?;
+                          if (chatData != null) {
+                            var messages = (chatData['messages'] as List<dynamic>).cast<Map<String, dynamic>>();
+                            return ListView(
+                              reverse: true,
+                              shrinkWrap: true,
+                              children: messages.reversed.map<Widget>((message) {
+                                bool userMessage = message['uid'] == globals.user!.uid;
+                                return ListTile(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  title: Row(
+                                    mainAxisAlignment: userMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                    children: userMessage ? [
+                                      Flexible(
+                                        child: Text(
+                                          message['content'],
+                                          textAlign: TextAlign.end,
+                                        )
+                                      ),
+                                      const SizedBox(width: 8),
+                                      ProfilePicture(
+                                        user: globals.user!,
+                                        size: 36,
+                                        color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                        backgroundColor: Theme.of(context).highlightColor
+                                      ),
+                                    ]:[
+                                      ProfilePicture(
+                                        user: widget.user,
+                                        size: 36,
+                                        color: Theme.of(context).textTheme.bodyMedium!.color!, 
+                                        backgroundColor: Theme.of(context).highlightColor
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Flexible(
+                                        child: Text(message['content'])
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          } else {
+                            return const Messenger(message: 'No messages to display');
+                          }
+                        }else{
+                          return const CustomLoader();
+                        }
+                      }
+                    );
                   }
                 ),
               ),
