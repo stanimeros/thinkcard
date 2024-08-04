@@ -53,16 +53,16 @@ class _ChatsPageState extends State<ChatsPage>{
                         var chatUsers = chatData['users'] as List<dynamic>;
                         chatUsers.remove(widget.authUser.uid);
                         String friendUid = chatUsers[0];
-                        return FutureBuilder<AppUser?>(
-                          future: FirestoreService().getUser(friendUid),
-                          builder: (context, friendSnapshot) {
-                            if (friendSnapshot.hasData){
-                              AppUser? friend = friendSnapshot.data;
-
-                              if (friend != null){
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8),
-                                  child: ListTile(
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: FutureBuilder<AppUser?>(
+                            future: FirestoreService().getUser(friendUid),
+                            builder: (context, friendSnapshot) {
+                              if (friendSnapshot.hasData){
+                                AppUser? friend = friendSnapshot.data;
+                          
+                                if (friend != null){
+                                  return ListTile(
                                     minTileHeight: 68,
                                     tileColor: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -94,16 +94,13 @@ class _ChatsPageState extends State<ChatsPage>{
                                         SlidePageRoute(page: ChatPage(user: friend))
                                       );
                                     },
-                                  ),
-                                );
+                                  );
+                                }
                               }
+                          
+                              return const SkeletonChat();
                             }
-
-                            return const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              child: SkeletonChat(),
-                            );
-                          }
+                          ),
                         );
                       },
                     );
