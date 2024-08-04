@@ -17,6 +17,7 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
 
   late User authUser;
+  late FirebaseFirestore firestore;
   late FirebaseStorage storage;
 
   bool isUploading = false;
@@ -49,11 +50,12 @@ class _CreatePageState extends State<CreatePage> {
         isUploading = true;
       });
 
-      List<String> imagesURLs = [];
+      DocumentReference docRef = firestore.collection('posts').doc();
 
+      List<String> imagesURLs = [];
       while (imageFiles.isNotEmpty) {
         XFile imageFile = imageFiles.first;
-        Reference ref = storage.ref().child("${authUser.uid}/${DateTime.now()}");
+        Reference ref = storage.ref().child("${authUser.uid}/${docRef.id}/${DateTime.now()}");
         UploadTask uploadTask = ref.putFile(File(imageFile.path));
 
         final snapshot = await uploadTask.whenComplete(() {});
@@ -64,9 +66,7 @@ class _CreatePageState extends State<CreatePage> {
         });
       }
 
-      await FirebaseFirestore.instance
-      .collection('posts').doc()
-      .set({
+      docRef.set({
         'uid': authUser.uid,
         'title': titleController.text,
         'description' : descController.text,
@@ -88,6 +88,7 @@ class _CreatePageState extends State<CreatePage> {
   void initState() {
     super.initState();
     authUser = FirebaseAuth.instance.currentUser!;
+    firestore = FirebaseFirestore.instance;
     storage = FirebaseStorage.instance;
   }
   
