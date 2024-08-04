@@ -141,7 +141,7 @@ class _PostPageState extends State<PostPage> {
                                   funBtn1: () {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
-                                    FirestoreService().deletePost(widget.post);
+                                    FirestoreService().deletePost(widget.post.id);
                                   },
                                   funBtn2: () {
                                     Navigator.pop(context);

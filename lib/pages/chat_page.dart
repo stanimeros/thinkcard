@@ -79,7 +79,7 @@ class _ChatPageState extends State<ChatPage>{
               ),
               Expanded(
                 child: StreamBuilder(
-                  stream: FirestoreService().getChatSnapshot(widget.user),
+                  stream: FirestoreService().getChatSnapshots(widget.user),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var chatData = snapshot.data!.data() as Map<String, dynamic>?;

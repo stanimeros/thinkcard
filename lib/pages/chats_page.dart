@@ -39,7 +39,7 @@ class _ChatsPageState extends State<ChatsPage>{
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirestoreService().getChatsSnapshot(),
+              stream: FirestoreService().getChatsSnapshots(),
               builder: (context, chatsSnapshot) {
                 if (chatsSnapshot.hasData) {
                   var chatsDocs = chatsSnapshot.data!.docs;

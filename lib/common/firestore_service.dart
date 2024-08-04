@@ -28,16 +28,20 @@ class FirestoreService {
   }
 
   Future<List<Post>> getRandomPosts() async {
-    final firestore = FirebaseFirestore.instance;
-    final postsCollection = firestore.collection('posts');
+    try {
+      final postsCollection = firestore.collection('posts');
 
-    // Get all posts
-    final querySnapshot = await postsCollection.get();
-    final allPosts = querySnapshot.docs;
-    allPosts.shuffle();
-    
-    // Convert to List<Post>
-    return allPosts.take(4).map((doc) => Post.fromFirestore(doc)).toList();
+      // Get all posts
+      final querySnapshot = await postsCollection.get();
+      final allPosts = querySnapshot.docs;
+      allPosts.shuffle();
+      
+      // Convert to List<Post>
+      return allPosts.take(4).map((doc) => Post.fromFirestore(doc)).toList();
+    } catch (e) {
+      debugPrint('Error getUser: $e');
+      return [];
+    }
   }
 
   Future<List<Post>> getUserPosts(String uid) async {
@@ -56,16 +60,20 @@ class FirestoreService {
     }
   }
 
-  Future<void> incrementPostReaction(String postId, bool isLike) async {
-    final postRef = firestore.collection('posts').doc(postId);
+  Future<void> incrementPostReaction(String pid, bool isLike) async {
+    try {
+      final postRef = firestore.collection('posts').doc(pid);
 
-    // Define the field to update and the increment value
-    final updateData = isLike
+      // Define the field to update and the increment value
+      final updateData = isLike
         ? {'likes': FieldValue.increment(1)}
         : {'dislikes': FieldValue.increment(1)};
 
-    // Update the post with the incremented field value
-    await postRef.update(updateData);
+      // Update the post with the incremented field value
+      await postRef.update(updateData);
+    }catch (e) {
+      debugPrint('Error incrementPostReaction: $e');
+    }
   }
 
   Future<List<AppUser>> searchUsers(String query) async {
@@ -87,9 +95,9 @@ class FirestoreService {
     }
   }
 
-  Future<bool> deletePost(Post post) async {
+  Future<bool> deletePost(String pid) async {
     try{
-      DocumentReference postDocRef = firestore.collection('posts').doc(post.id);
+      DocumentReference postDocRef = firestore.collection('posts').doc(pid);
       await postDocRef.delete();
       return true;
     }catch(e){
@@ -99,26 +107,26 @@ class FirestoreService {
     return false;
   }
 
-  Stream<DocumentSnapshot> getChatSnapshot(AppUser friend){
+  Stream<DocumentSnapshot> getChatSnapshots(AppUser friend){
     List<String> ids = [authUser.uid, friend.uid];
     ids.sort();
     String chatId = ids.join('_');
 
-    var chatSnapshot = firestore
+    var chatSnapshots = firestore
       .collection('chats')
       .doc(chatId)
       .snapshots();
 
-    return chatSnapshot;
+    return chatSnapshots;
   }
 
-  Stream<QuerySnapshot> getChatsSnapshot(){
-    var chatsSnapshot = firestore
+  Stream<QuerySnapshot> getChatsSnapshots(){
+    var chatsSnapshots = firestore
       .collection('chats')
       .where('users', arrayContains: authUser.uid)
       .snapshots();
 
-    return chatsSnapshot;
+    return chatsSnapshots;
   }
 
   void sendMessage(AppUser friend, String content) async {
@@ -128,7 +136,6 @@ class FirestoreService {
     // Create a Message object with necessary data
     Message message = Message(
       uid: authUser.uid,
-      friendUid: friend.uid,
       content: content,
       timestamp: DateTime.now(),
     );
@@ -136,7 +143,6 @@ class FirestoreService {
     // Convert the Message object to a map for Firestore
     Map<String, dynamic> messageData = {
       'uid': message.uid,
-      // 'friendUid': message.friendUid,
       'content': message.content,
       'timestamp': message.timestamp,
     };
