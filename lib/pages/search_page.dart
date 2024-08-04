@@ -9,23 +9,21 @@ import 'package:thinkcard/pages/user_page.dart';
 import 'package:thinkcard/widgets/profile_picture.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
-  final user = FirebaseAuth.instance.currentUser!;
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-
+  late User authUser;
   bool isLoading = false;
+  
+  List<AppUser> results = [];
   FocusNode focusNode = FocusNode();
   TextEditingController searchController = TextEditingController();
 
-  List<AppUser> results = [];
-
   Future<void> search(String query) async{
-
     List<AppUser> queryResults = [];
     if (query.length >3 && query.length<13){
       queryResults = await FirestoreService().searchUsers(query);
@@ -34,6 +32,12 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       results = queryResults;
     });
+  }
+
+  @override
+  void initState() {
+    authUser = FirebaseAuth.instance.currentUser!;
+    super.initState();
   }
 
   @override

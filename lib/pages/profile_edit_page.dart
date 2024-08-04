@@ -30,8 +30,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   final ImagePicker picker = ImagePicker();
 
   bool invalid = false;
-  FocusNode focusNode = FocusNode();
-  TextEditingController usernameController = TextEditingController();
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode descFocusNode = FocusNode();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController joinedController = TextEditingController();
 
@@ -48,11 +50,15 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   Future<void> saveChanges() async{
-    String newUsername = usernameController.text.trim().toLowerCase();
+    String newUsername = nameController.text.trim().toLowerCase();
 
     if (!invalid){
       if (widget.user.username != newUsername){
         await FirestoreService().setUsername(newUsername);
+      }
+
+      if (widget.user.description != descController.text){
+        await FirestoreService().setDescription(descController.text);
       }
 
       if (newProfilePicture != null){
@@ -76,7 +82,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     super.initState();
     String dateJoined = 
       '${widget.user.joined!.day.toString().padLeft(2,'0')}/${widget.user.joined!.month.toString().padLeft(2,'0')}/${widget.user.joined!.year}';
-    usernameController = TextEditingController(text: widget.user.username);
+    nameController = TextEditingController(text: widget.user.username);
+    descController = TextEditingController(text: widget.user.description);
     emailController = TextEditingController(text: widget.user.email);
     joinedController = TextEditingController(text: dateJoined);
   }
@@ -179,23 +186,37 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               ),
               const SizedBox(height: 30),
               TextField(
-                focusNode: focusNode,
-                controller: usernameController,
+                focusNode: nameFocusNode,
+                controller: nameController,
                 onEditingComplete: () {
                   setState(() {
-                    invalid = usernameError(usernameController.text) != null;
+                    invalid = usernameError(nameController.text) != null;
                   });
-                  focusNode.unfocus();
+                  nameFocusNode.unfocus();
                 },
                 onTapOutside: (event) {
                   setState(() {
-                    invalid = usernameError(usernameController.text) != null;
+                    invalid = usernameError(nameController.text) != null;
                   });
-                  focusNode.unfocus();
+                  nameFocusNode.unfocus();
                 },
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  errorText: invalid ? usernameError(usernameController.text) : null,
+                  errorText: invalid ? usernameError(nameController.text) : null,
+                ),
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                focusNode: descFocusNode,
+                controller: descController,
+                onEditingComplete: () {
+                  descFocusNode.unfocus();
+                },
+                onTapOutside: (event) {
+                  descFocusNode.unfocus();
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Description',
                 ),
               ),
               const SizedBox(height: 30),

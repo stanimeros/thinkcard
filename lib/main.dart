@@ -70,8 +70,8 @@ class _MainAppState extends State<MainApp> {
                               controller: pageController,
                               children: [
                                 const FeedPage(),
-                                SearchPage(),
-                                CreatePage(),
+                                const SearchPage(),
+                                const CreatePage(),
                                 ChatsPage(),
                                 ProfilePage()
                               ],

@@ -201,6 +201,18 @@ class FirestoreService {
     }
   }
 
+  Future<void> setDescription(String description) async {
+    try{
+      DocumentReference userDocRef = firestore.collection('users').doc(authUser.uid);
+      await userDocRef.set({
+        'description': description
+      }, SetOptions(merge: true));
+      globals.user?.description = description;
+  }catch(e){
+      debugPrint('Error setDescription: $e');
+    }
+  }
+
   Future<void> setProfilePicture(String path) async {
     try{
       String url = '';

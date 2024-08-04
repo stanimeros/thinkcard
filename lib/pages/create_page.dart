@@ -8,9 +8,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
 
 class CreatePage extends StatefulWidget {
-  final user = FirebaseAuth.instance.currentUser!;
-
-  CreatePage({super.key});
+  const CreatePage({super.key});
 
   @override
   State<CreatePage> createState() => _CreatePageState();
@@ -18,66 +16,81 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> {
 
-  bool isUploading = false;
-  final ImagePicker picker = ImagePicker();
-  List<XFile> imageFiles = [];
+  late User authUser;
+  late FirebaseStorage storage;
 
-  final titleFocusNode = FocusNode();
-  final descFocusNode = FocusNode();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descController = TextEditingController();
+  bool isUploading = false;
+  List<XFile> imageFiles = [];
+  ImagePicker picker = ImagePicker();
+
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode descFocusNode = FocusNode();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
 
   Future<void> pickImages() async {
-    if (imageFiles.isEmpty){
-      final List<XFile> selectedImages = await picker.pickMultiImage(
-        maxHeight: 1920,
-        maxWidth: 1080,
-        imageQuality: 85,
-        limit: 5
-      );
-      
-      if (selectedImages.isNotEmpty) {
-        setState(() {
-          imageFiles = selectedImages;
-        });
-      }
+    final List<XFile> selectedImages = await picker.pickMultiImage(
+      maxHeight: 1920,
+      maxWidth: 1080,
+      imageQuality: 85,
+      limit: 4,
+    );
+    
+    if (selectedImages.isNotEmpty) {
+      setState(() {
+        imageFiles.addAll(selectedImages);
+      });
     }
   }
 
-  Future<bool> upload() async {
-    titleFocusNode.unfocus();
-    descFocusNode.unfocus();
-    String title = titleController.text;
-    if (imageFiles.isNotEmpty && title.isNotEmpty) {
-      FirebaseStorage storage = FirebaseStorage.instance;
+  Future<void> upload() async {
+    if (imageFiles.isNotEmpty && !isUploading && titleController.text.isNotEmpty) {
+      setState(() {
+        isUploading = true;
+      });
+
       List<String> imagesURLs = [];
-      for (var imageFile in imageFiles) {
-        Reference ref = storage.ref().child("${widget.user.uid}/${DateTime.now()}");
+
+      while (imageFiles.isNotEmpty) {
+        XFile imageFile = imageFiles.first;
+        Reference ref = storage.ref().child("${authUser.uid}/${DateTime.now()}");
         UploadTask uploadTask = ref.putFile(File(imageFile.path));
 
         final snapshot = await uploadTask.whenComplete(() {});
         imagesURLs.add(await snapshot.ref.getDownloadURL());
+
+        setState(() {
+          imageFiles.removeAt(0);
+        });
       }
 
-      await FirebaseFirestore.instance.collection('posts').add({
-        'uid': widget.user.uid,
-        'title': title,
-        'images': imagesURLs,
+      await FirebaseFirestore.instance
+      .collection('posts').doc()
+      .set({
+        'uid': authUser.uid,
+        'title': titleController.text,
+        'description' : descController.text,
+        'images': FieldValue.arrayUnion(imagesURLs),
         'timestamp': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true));
 
       setState(() {
         imageFiles = [];
-        titleController.text = '';
-        descController.text = '';
+        isUploading = false;
       });
 
-      return true;
+      titleController.clear();
+      descController.clear();
     }
-
-    return false;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    authUser = FirebaseAuth.instance.currentUser!;
+    storage = FirebaseStorage.instance;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -98,20 +111,7 @@ class _CreatePageState extends State<CreatePage> {
                 foregroundColor: Theme.of(context).textTheme.bodyMedium!.color!,
                 child: IconButton(
                   onPressed: () async{
-                    if (!isUploading){
-                      try{
-                        setState(() {
-                          isUploading = true;
-                        });
-                        await upload();
-                      }catch(e){
-                        debugPrint('Error $e');
-                      }finally{
-                        setState(() {
-                          isUploading = false;
-                        });
-                      }
-                    }
+                    upload();
                   }, 
                   icon: isUploading ?
                   const CustomLoader()
@@ -124,63 +124,8 @@ class _CreatePageState extends State<CreatePage> {
             ],
           ),
         ),
-        GestureDetector(
-          onTap: pickImages,
-          child: Container(
-            height: 120.0,
-            color: Theme.of(context).colorScheme.surfaceContainer.withOpacity(0.75),
-            child: imageFiles.isEmpty
-              ? const Center(child: Text('Tap to select images'))
-              : ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: imageFiles.map((imageFile) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Image.file(
-                              File(imageFile.path), 
-                              width: 100, 
-                              height: 100, 
-                              fit: BoxFit.cover
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            width: 100,
-                            height: 100,
-                            alignment: Alignment.topRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  imageFiles.remove(imageFile);
-                                });
-                              },
-                              child: CircleAvatar(
-                                radius: 12,
-                                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                                child: const Icon(
-                                  size: 18,
-                                  LucideIcons.x
-                                ),
-                              )
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-          ),
-        ),
-        const SizedBox(height: 16.0),
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: TextField(
             focusNode: titleFocusNode,
             controller: titleController,
@@ -188,13 +133,83 @@ class _CreatePageState extends State<CreatePage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: TextField(
+            maxLines: 2,
+            maxLength: 60,
             focusNode: descFocusNode,
             controller: descController,
             decoration: const InputDecoration(labelText: 'Description'),
           ),
         ),
+        Expanded(
+          child: GestureDetector(
+            onTap: pickImages,
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              color: Colors.transparent,
+              child: imageFiles.isEmpty
+              ? const Center(child: Text('Tap to select images'))
+              : GridView.builder(
+                padding: EdgeInsets.zero,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: imageFiles.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Image.file(
+                          File(imageFiles[index].path), 
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: BoxFit.cover
+                        ),
+                      ),
+                      AnimatedOpacity(
+                        opacity: isUploading ? 1 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: Container(
+                          color: Theme.of(context).highlightColor,
+                          child: const CustomLoader()
+                        )
+                      ),
+                      Visibility(
+                        visible: !isUploading,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                imageFiles.removeAt(index);
+                              });
+                            },
+                            child: CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                              child: const Icon(
+                                size: 18,
+                                LucideIcons.x
+                              ),
+                            )
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

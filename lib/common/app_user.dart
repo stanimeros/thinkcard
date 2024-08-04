@@ -4,15 +4,17 @@ class AppUser{
   final String uid;
   final String email;
   String username;
-  DateTime? joined;
+  String description;
   String imageURL;
+  DateTime? joined;
 
   AppUser({
     required this.uid,
     required this.email,
     required this.username,
-    this.joined,
+    this.description = '',
     this.imageURL = '',
+    this.joined,
   });
 
   factory AppUser.fromFirestore(DocumentSnapshot doc) {
@@ -21,8 +23,9 @@ class AppUser{
       uid: doc.id,
       email: data['email'] ?? '',
       username: data['username'] ?? '',
-      joined: data['joined']?.toDate(),
+      description: data['description'] ?? '',
       imageURL: data['image'] ?? '',
+      joined: data['joined']?.toDate(),
     );
   }
 }
