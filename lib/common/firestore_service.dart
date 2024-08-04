@@ -107,37 +107,22 @@ class FirestoreService {
     return false;
   }
 
-  Future<void> createChat(String fuid) async{
-    try{
-      List<String> ids = [authUser.uid, fuid];
+  Stream<DocumentSnapshot>? getChatSnapshots(AppUser friend){
+    try {
+      List<String> ids = [authUser.uid, friend.uid];
       ids.sort();
       String chatId = ids.join('_');
 
-      DocumentReference chatDocRef = firestore.collection('chats').doc(chatId);
-      DocumentSnapshot chatDoc = await chatDocRef.get();
+      var chatSnapshots = firestore
+        .collection('chats')
+        .doc(chatId)
+        .snapshots();
 
-      if (!chatDoc.exists) {
-        await chatDocRef.set({
-          'users' : [authUser.uid, fuid],
-          'messages': [],
-        });
-      }
+        return chatSnapshots;
     }catch (e){
-      debugPrint('Error createChat: $e');
+      debugPrint('Error getChatSnapshots: $e');
+      return null;
     }
-  }
-
-  Stream<DocumentSnapshot> getChatSnapshots(AppUser friend){
-    List<String> ids = [authUser.uid, friend.uid];
-    ids.sort();
-    String chatId = ids.join('_');
-
-    var chatSnapshots = firestore
-      .collection('chats')
-      .doc(chatId)
-      .snapshots();
-
-    return chatSnapshots;
   }
 
   Stream<QuerySnapshot> getChatsSnapshots(){
