@@ -73,7 +73,7 @@ class _MainAppState extends State<MainApp> {
                                 const SearchPage(),
                                 const CreatePage(),
                                 ChatsPage(),
-                                ProfilePage()
+                                const ProfilePage()
                               ],
                             ),
                           )

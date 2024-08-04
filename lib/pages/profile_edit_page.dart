@@ -64,6 +64,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       if (newProfilePicture != null){
         await FirestoreService().setProfilePicture(newProfilePicture!.path);
       }
+
+      if (mounted){
+        Navigator.pop(context);
+      }
     }
   }
 
