@@ -92,7 +92,7 @@ class _UserPageState extends State<UserPage>{
                       ),
                     ],
                   ),
-                  UserPosts(user: user)
+                  Expanded(child: UserPosts(user: user))
                 ],
               );
             },

@@ -31,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage>{
     return Padding(
       padding: const EdgeInsets.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage>{
                 const SizedBox(width:8),
                 ProfilePicture(
                   user: user, 
-                  size: 50, 
+                  size: 54, 
                   color: Theme.of(context).textTheme.bodyMedium!.color!, 
                   backgroundColor: Theme.of(context).highlightColor, 
                 ),
@@ -76,9 +77,21 @@ class _ProfilePageState extends State<ProfilePage>{
                 )
               ],
             ),
-            UserPosts(user: user),
+            Visibility(
+              visible: user.description.isNotEmpty,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    Flexible(child: Text(user.description)
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(child: UserPosts(user: user)),
           ],
-        )
+        ),
     );
   }
 }
