@@ -16,6 +16,7 @@ import 'package:thinkcard/pages/login_page.dart';
 import 'package:thinkcard/pages/profile_page.dart';
 import 'package:thinkcard/pages/search_page.dart';
 import 'package:thinkcard/widgets/custom_loader.dart';
+import 'package:thinkcard/widgets/messenger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,6 +81,10 @@ class _MainAppState extends State<MainApp> {
                         );
                       }
                       return const LoginPage();
+                    }else if (snapshot.hasError){
+                      return Scaffold(
+                        body: Messenger(message: 'Error ${snapshot.error}')
+                      );
                     }
                     return const Scaffold(
                       body: CustomLoader()
