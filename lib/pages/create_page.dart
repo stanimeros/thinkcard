@@ -136,7 +136,6 @@ class _CreatePageState extends State<CreatePage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: TextField(
-            maxLines: 2,
             maxLength: 60,
             focusNode: descFocusNode,
             controller: descController,
@@ -178,7 +177,10 @@ class _CreatePageState extends State<CreatePage> {
                         opacity: isUploading ? 1 : 0,
                         duration: const Duration(milliseconds: 300),
                         child: Container(
-                          color: Theme.of(context).highlightColor,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).highlightColor,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
                           child: const CustomLoader()
                         )
                       ),

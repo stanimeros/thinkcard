@@ -52,11 +52,13 @@ class _UserPostsState extends State<UserPosts> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  widget.authUser.uid == widget.user.uid
-                      ? 'It looks like you haven\'t posted anything yet. Tap \'Create\' to share your photos!'
-                      : 'No posts yet',
-                  textAlign: TextAlign.center,
+                Center(
+                  child: Text(
+                    widget.authUser.uid == widget.user.uid
+                        ? 'It looks like you haven\'t posted anything yet. Tap \'Create\' to share your photos!'
+                        : 'No posts yet',
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ) : GridView.builder(
